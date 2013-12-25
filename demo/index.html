@@ -4,13 +4,13 @@
     <meta name="google-site-verification" content="LgblCrocw4d4ccdOkob0kzt3Ing7mMy1dKTtLoUb-2s" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="keywords" content="how crop images, how zoom images, crop image,CropZooom, rotate image, zoom image, jquery plugin, crop plugin, zoom plugin, rotation, croppping, zooming" />
-	<meta name="description" content="CropZoom is a plugin that let you select, rotate and zoom an image to make a crop. This is free and ready to use." />  
+	<meta name="description" content="CropZoom is a plugin that let you select, rotate and zoom an image to make a crop. This is free and ready to use." />
     <title>CropZoom another Jquery Plugin</title>
 
-   
+
     <script type="text/javascript" src="js/script.js"></script>
-    <link href="css/jquery-ui-1.10.3.custom.min.css" rel="Stylesheet" type="text/css" /> 
-    <link href="css/jquery.cropzoom.css" rel="Stylesheet" type="text/css" /> 
+    <link href="css/jquery-ui-1.10.3.custom.min.css" rel="Stylesheet" type="text/css" />
+    <link href="css/jquery.cropzoom.css" rel="Stylesheet" type="text/css" />
     <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
     <script type="text/javascript" src="js/jquery.cropzoom.js"></script>
@@ -35,7 +35,7 @@
             enableZoom:true,
             zoomSteps:10,
             rotationSteps:10,
-            selector:{        
+            selector:{
               centered:true,
               startWithOverlay: true,
               borderColor:'blue',
@@ -50,8 +50,15 @@
             }
         });
         cropzoom.setSelector(45,45,200,150,true);
-        $('#crop').click(function(){ 
+        $('#crop').click(function(){
             cropzoom.send('resize_and_crop_imagick.php','POST',{},function(rta){
+                $('.result').find('img').remove();
+                var img = $('<img />').attr('src',rta);
+                $('.result').find('.txt').hide().end().append(img);
+            });
+        });
+		$('#crop_imagine').click(function(){
+            cropzoom.send('resize_and_crop_imagine.php','POST',{},function(rta){
                 $('.result').find('img').remove();
                 var img = $('<img />').attr('src',rta);
                 $('.result').find('.txt').hide().end().append(img);
@@ -98,7 +105,7 @@
                 		</li>
                 		<li>
                 			<a href="download.html"><span class="l"></span><span class="r"></span><span class="t">Download and Docs</span></a>
-                		</li>		
+                		</li>
                 	</ul>
                 </div>
                 <script type="text/javascript"><!--
@@ -171,7 +178,7 @@
                                         </div>
                                         <div class="cleared"></div>
                         </div>
-                        
+
                         		<div class="cleared"></div>
                             </div>
                         </div>
@@ -188,14 +195,20 @@
                                                   <div id="crop_container"></div>
                                                   <div class="result">
                                                     <div class="txt">Here you will see the cropped image</div>
-                                                  </div> 
-                                                  <div class="cleared"></div> 
-                                              </div>  
+                                                  </div>
+                                                  <div class="cleared"></div>
+                                              </div>
                                               <br />
                                               <span class="button-wrapper" id="crop">
                                                     <span class="l"> </span>
                                                     <span class="r"> </span>
                                                     <a class="button" href="javascript:void(0)">Crop</a>
+                                              </span>
+                                              &nbsp;
+											  <span class="button-wrapper" id="crop_imagine">
+                                                    <span class="l"> </span>
+                                                    <span class="r"> </span>
+                                                    <a class="button" href="javascript:void(0)">Crop With Imagine Library</a>
                                               </span>
                                               &nbsp;
                                               <span class="button-wrapper" id="restore">
@@ -217,7 +230,7 @@
                 <script type="text/javascript"
                 src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
                 </script>
-                        
+
                                 <div class="cleared"></div>
                             </div>
                         </div>
@@ -228,7 +241,7 @@
                         <div class="Footer-text">
                             <p><a href="mailto:gastonrobledo@gmail.com">Contact</a>
                                 Copyright &copy; 2009 Gaston Robledo (<a href="http://www.codigosutiles.com.ar/" target="_blank">Codigos Utiles</a>). All Rights Reserved.</p>
-                        </div>                                                                                     
+                        </div>
                     </div>
                     <div class="Footer-background"></div>
                 </div>
