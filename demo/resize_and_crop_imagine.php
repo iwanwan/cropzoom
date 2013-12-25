@@ -68,7 +68,7 @@ if($_POST["imageY"] > 0){
 if($viewPortW > $width || $viewPortH > $height){
 
     $cropWidth  = ($viewPortW > $width) ? $width : $viewPortW;
-    $cropHeight = ($viewPortH > $height) ? $width : $viewPortH;
+    $cropHeight = ($viewPortH > $height) ? $height : $viewPortH;
 
     $image->crop(
         new \Imagine\Image\Point($src_x, $src_y),
