@@ -65,39 +65,24 @@ if($_POST["imageY"] > 0){
     $src_y = abs($_POST["imageY"]);
 }
 
-if($viewPortW > $width || $viewPortH > $height){
+$cropWidth  = ($viewPortW > $width) ? $width : $viewPortW;
+$cropHeight = ($viewPortH > $height) ? $height : $viewPortH;
 
-    $cropWidth  = ($viewPortW > $width) ? $width : $viewPortW;
-    $cropHeight = ($viewPortH > $height) ? $height : $viewPortH;
+$image->crop(
+    new \Imagine\Image\Point($src_x, $src_y),
+    new \Imagine\Image\Box($cropWidth, $cropHeight)
+);
 
-    $image->crop(
-        new \Imagine\Image\Point($src_x, $src_y),
-        new \Imagine\Image\Box($cropWidth, $cropHeight)
-    );
+//create the viewport to put the cropped image
+$viewportSize  = new Imagine\Image\Box($viewPortW, $viewPortH);
+$viewport = $imagine->create($viewportSize);
+$viewport->paste($image, new \Imagine\Image\Point($dst_x, $dst_y));
+$viewport->crop(
+    new \Imagine\Image\Point($selectorX, $selectorY),
+    new \Imagine\Image\Box($_POST["selectorW"], $_POST["selectorH"])
+);
 
-    //create the viewport to put the cropped image
-    $viewportSize  = new Imagine\Image\Box($viewPortW, $viewPortH);
-    $viewport = $imagine->create($viewportSize);
-    $viewport->paste($image, new \Imagine\Image\Point($dst_x, $dst_y));
-    $viewport->crop(
-        new \Imagine\Image\Point($selectorX, $selectorY),
-        new \Imagine\Image\Box($_POST["selectorW"], $_POST["selectorH"])
-    );
-
-    $targetFile = 'tmp/test_'.time().".".$ext;
-    $viewport->save($targetFile);
-
-}else{
-    $image->crop(
-        new \Imagine\Image\Point($src_x, $src_y),
-        new \Imagine\Image\Box($viewPortW, $viewPortH)
-    );
-    $image->crop(
-        new \Imagine\Image\Point($selectorX, $selectorY),
-        new \Imagine\Image\Box($_POST["selectorW"], $_POST["selectorH"])
-    );
-    $targetFile = 'tmp/test_'.time().".".$ext;
-    $image->save($targetFile);
-}
+$targetFile = 'tmp/test_'.time().".".$ext;
+$viewport->save($targetFile);
 
 echo $targetFile;
